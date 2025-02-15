@@ -2,7 +2,8 @@ import "dotenv/config";
 import TicketMachine from "./TicketMachine";
 
 class App {
-    main() {
+    async main() {
+        const type = process.env.MACHINE_TYPE
         const currency = process.env.CURRENCY
         const pricePerMinute = process.env.PRICE_PER_MINUTE
         
@@ -12,8 +13,13 @@ class App {
 
     //Instantiation
     const ticketmachine = new TicketMachine(currency, Number(pricePerMinute))
-    //new TicketMachine("EUR", 2).startInteraction()
-    ticketmachine.startInteraction()
+    
+    if(type === "1") {
+        await ticketmachine.startInteractionConsole();
+    } else if (type === "2") {
+        await ticketmachine.startInteractionAPI();
+    }
+    
     ticketmachine.endInteraction()
     }
 }
