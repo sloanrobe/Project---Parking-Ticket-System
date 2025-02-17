@@ -20,7 +20,7 @@ export default class TicketMachine {
 
     async startInteractionAPI(): Promise<void> {
         return new Promise<void>((resolve) => {
-            this.app.get("/duration", (req: Request) => {
+            this.app.get("/:duration", (req: Request) => {
                 const duration = req.params.duration;
                 const price = this.calculatePrice(Number(duration));
                 this.displayPrice(price);
@@ -35,6 +35,11 @@ export default class TicketMachine {
     
     endInteraction() {
         console.log('Thank you for parking with us!')
+    }
+
+    endInteractionAndCloseProgram(): void {
+        console.log("Thank you for parking with us!")
+        process.exit()
     }
 
     private displayPrice(price: number) {

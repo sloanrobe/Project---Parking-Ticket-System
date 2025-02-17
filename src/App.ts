@@ -7,20 +7,20 @@ class App {
         const currency = process.env.CURRENCY
         const pricePerMinute = process.env.PRICE_PER_MINUTE
         
-    if(!currency || !pricePerMinute) {
-        throw new Error("Error in configuration");   
-    }
+        if(!currency || !pricePerMinute) {
+            throw new Error("Error in configuration");   
+        }
 
     //Instantiation
-    const ticketmachine = new TicketMachine(currency, Number(pricePerMinute))
+        const ticketmachine = new TicketMachine(currency, Number(pricePerMinute))
     
-    if(type === "1") {
-        await ticketmachine.startInteractionConsole();
-    } else if (type === "2") {
-        await ticketmachine.startInteractionAPI();
-    }
-    
-    ticketmachine.endInteraction()
+        if(type === "1") {
+            await ticketmachine.startInteractionConsole();
+            ticketmachine.endInteraction();
+        } else if (type === "2") {
+            await ticketmachine.startInteractionAPI();
+            await ticketmachine.endInteractionAndCloseProgram();
+        }
     }
 }
 
