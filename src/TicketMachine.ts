@@ -1,5 +1,5 @@
 import {rawlist} from '@inquirer/prompts'
-import express, { Request } from "express"
+import express, { Request, Response } from "express"
 
 export default class TicketMachine {
     private currency: string
@@ -20,10 +20,11 @@ export default class TicketMachine {
 
     async startInteractionAPI(): Promise<void> {
         return new Promise<void>((resolve) => {
-            this.app.get("/:duration", (req: Request) => {
+            this.app.get("/:duration", (req: Request, res: Response) => {
                 const duration = req.params.duration;
                 const price = this.calculatePrice(Number(duration));
                 this.displayPrice(price);
+                res.send(`We have received your request.  The price will be ${price}${this.currency}.`)
                 resolve();
             });
 
@@ -63,5 +64,4 @@ export default class TicketMachine {
         });
         return answer
     }
-    }
-    
+}
