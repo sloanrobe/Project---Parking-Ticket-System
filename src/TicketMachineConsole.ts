@@ -1,5 +1,5 @@
 import {rawlist} from '@inquirer/prompts'
-import ITicketMachine from './iTicketMachine'
+import ITicketMachine from './ITicketMachine'
 
 export default class TicketMachineConsole implements ITicketMachine {
     private currency: string
