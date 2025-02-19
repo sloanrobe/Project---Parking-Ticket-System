@@ -1,5 +1,6 @@
 import "dotenv/config";
-import TicketMachine from "./TicketMachine";
+import ITicketMachine from "./iTicketMachine";
+import TicketMachineConsole from "./TicketMachineConsole";
 
 class App {
     async main() {
@@ -11,16 +12,22 @@ class App {
             throw new Error("Error in configuration");   
         }
 
-    //Instantiation
-        const ticketmachine = new TicketMachine(currency, Number(pricePerMinute))
+        let ticketMachine: ITicketMachine
     
-        if(type === "1") {
-            await ticketmachine.startInteractionConsole();
-            ticketmachine.endInteraction();
+        if (type === "1") {
+            ticketMachine = new TicketMachineConsole(currency, Number(pricePerMinute))
         } else if (type === "2") {
-            await ticketmachine.startInteractionAPI();
-            await ticketmachine.endInteractionAndCloseProgram();
+            throw new Error("TO DO - this has not yet been implemented.")
+            // ticketMachine = new TicketMachineAPI()
+        } else if (type === "3") {
+            throw new Error("TO DO - this has not yet been implemented.")
+            // ticketMachine = new TicketMachineReadFile()
+        } else {
+            throw new Error("Error in configuration")
         }
+
+        await ticketMachine.startInteraction()
+        ticketMachine.endInteraction()
     }
 }
 
