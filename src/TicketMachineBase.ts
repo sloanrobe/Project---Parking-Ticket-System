@@ -1,21 +1,17 @@
-import fs from "node:fs"
-
-export default class TicketMachine {
-    private currency: string
-    private pricePerMinute: number
-    
-    private timeout = 7
+export default class TicketMachineBase {
+    protected currency: string
+    protected pricePerMinute: number
 
     constructor(_currency: string, _pricePerMinute: number) {
         this.currency = _currency
         this.pricePerMinute = _pricePerMinute    
     }
 
-    private displayPrice(price: number) {
+    protected displayPrice(price: number) {
         console.log(`The price will be ${price}${this.currency}.`)
     }
     
-    private calculatePrice(duration: number) {
+    protected calculatePrice(duration: number) {
         return duration * this.pricePerMinute
     }
 }

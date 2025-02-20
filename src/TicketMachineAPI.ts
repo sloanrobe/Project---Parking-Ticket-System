@@ -1,17 +1,11 @@
 import ITicketMachine from "./ITicketMachine"
 import express, { Request, Response } from "express"
+import TicketMachineBase from "./TicketMachineBase"
 
-export default class TicketMachineAPI implements ITicketMachine {
-    private currency: string
-    private pricePerMinute: number
+export default class TicketMachineAPI extends TicketMachineBase implements ITicketMachine {
     private app = express()
     private port = process.env.PORT || 3000
     
-    constructor(_currency: string, _pricePerMinute: number) {
-        this.currency = _currency
-        this.pricePerMinute = _pricePerMinute    
-    }
-
     async startInteraction(): Promise<void> {
         return new Promise<void>((resolve) => {
             this.app.get("/:duration", (req: Request, res: Response) => {
@@ -31,13 +25,5 @@ export default class TicketMachineAPI implements ITicketMachine {
     endInteraction(): void {
         console.log("Thank you for parking with us!")
         process.exit()
-    }
-
-    private displayPrice(price: number) {
-        console.log(`The price will be ${price}${this.currency}.`)
-    }
-    
-    private calculatePrice(duration: number) {
-        return duration * this.pricePerMinute
     }
 }
